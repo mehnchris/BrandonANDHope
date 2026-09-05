@@ -1,0 +1,16 @@
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.rsuser
+appsettings.Production.json
+*.db
+*.sqlite
+*.sqlite3
+App_Data/DataProtectionKeys/
+App_Data/Rsvps.csv
+*Responses*.xlsx
+publish/
+artifacts/

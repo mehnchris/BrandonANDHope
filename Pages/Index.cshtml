@@ -1,0 +1,190 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = Model.Wedding.CoupleNames;
+}
+
+<section id="home" class="hero-section">
+    <div class="hero-photo" style="background-image: url('@Model.Wedding.HeroImageUrl')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="eyebrow">Together with their families</p>
+        <h1>@Model.Wedding.CoupleNames</h1>
+        <p class="hero-date">@Model.Wedding.WeddingDate</p>
+        <p class="hero-place">@Model.Wedding.VenueName, @Model.Wedding.VenueCity</p>
+        <div class="hero-actions">
+            <a class="btn btn-romantic" href="#rsvp">RSVP</a>
+            <a class="btn btn-outline-light" href="#details">View Details</a>
+        </div>
+    </div>
+</section>
+
+<section id="story" class="section-band story-band">
+    <div class="section-heading">
+        <p class="eyebrow">Their Love Story</p>
+        <h2>A few moments that brought them here</h2>
+        <p>@Model.Wedding.StoryIntro</p>
+    </div>
+    <div class="story-timeline">
+        @foreach (var moment in Model.Wedding.Story)
+        {
+            <article class="story-moment">
+                <span>@moment.Year</span>
+                <h3>@moment.Title</h3>
+                <p>@moment.Description</p>
+            </article>
+        }
+    </div>
+</section>
+
+<section id="details" class="section-band details-band">
+    <div class="detail-grid">
+        <div>
+            <p class="eyebrow">Wedding Day</p>
+            <h2>Celebrate with us</h2>
+            <p class="section-copy">@Model.Wedding.CelebrationCopy</p>
+        </div>
+        <div class="detail-list" aria-label="Wedding details">
+            <div>
+                <span>Date</span>
+                <strong>@Model.Wedding.WeddingDate</strong>
+            </div>
+            <div>
+                <span>Venue</span>
+                <strong>@Model.Wedding.VenueName</strong>
+                <p>@Model.Wedding.VenueAddress</p>
+            </div>
+            <div>
+                <span>Dress Code</span>
+                <strong>@Model.Wedding.DressCode</strong>
+            </div>
+            <div>
+                <span>Setting</span>
+                <strong>Indoor & Outdoor</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="schedule" class="section-band">
+    <div class="section-heading">
+        <p class="eyebrow">Schedule</p>
+        <h2>The evening at a glance</h2>
+    </div>
+    <div class="schedule-grid">
+        @foreach (var item in Model.Wedding.Schedule)
+        {
+            <article class="schedule-card">
+                <time>@item.Time</time>
+                <h3>@item.Title</h3>
+                <p>@item.Location</p>
+            </article>
+        }
+    </div>
+</section>
+
+<section id="travel" class="section-band travel-band">
+    <div class="travel-content">
+        <p class="eyebrow">Travel & Stay</p>
+        <h2>Make a weekend of it</h2>
+        <p>@Model.Wedding.TravelNote</p>
+        <p>@Model.Wedding.ParkingNote</p>
+    </div>
+    <div class="travel-notes">
+        <div>
+            <span>Nearest Airport</span>
+            <strong>Will Rogers World Airport</strong>
+        </div>
+        <div>
+            <span>Hotel Ideas</span>
+            <strong>@string.Join(", ", Model.Wedding.Hotels)</strong>
+        </div>
+        <div>
+            <span>Local Favorites</span>
+            <strong>@string.Join(", ", Model.Wedding.LocalRecommendations)</strong>
+        </div>
+    </div>
+</section>
+
+<section id="gallery" class="section-band gallery-band">
+    <div class="section-heading">
+        <p class="eyebrow">Gallery</p>
+        <h2>Photos coming soon</h2>
+        <p>Brandon and Hope plan to share photos by email. Until then, this space is ready for engagement photos and favorite memories.</p>
+    </div>
+    <div class="gallery-grid" aria-label="Photo gallery placeholders">
+        <div class="gallery-photo large">Engagement</div>
+        <div class="gallery-photo">Bricktown</div>
+        <div class="gallery-photo">Zeus</div>
+        <div class="gallery-photo wide">Family</div>
+    </div>
+</section>
+
+<section id="registry" class="section-band registry-band">
+    <div>
+        <p class="eyebrow">Registry</p>
+        <h2>Details coming soon</h2>
+        <p>Registry information will be added here once Brandon and Hope are ready to share it.</p>
+    </div>
+</section>
+
+<section id="rsvp" class="section-band rsvp-band">
+    <div class="rsvp-intro">
+        <p class="eyebrow">RSVP</p>
+        <h2>Let them know you are coming</h2>
+        <p>Please respond by @Model.Wedding.RsvpDeadline so Brandon and Hope can save your seat and build the perfect playlist.</p>
+        @if (Model.RsvpSubmitted)
+        {
+            <div class="success-message" role="status">Thank you. Your RSVP has been saved.</div>
+        }
+    </div>
+    <form method="post" class="rsvp-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <label asp-for="Rsvp.FullName"></label>
+        <input asp-for="Rsvp.FullName" />
+        <span asp-validation-for="Rsvp.FullName"></span>
+
+        <label asp-for="Rsvp.Email"></label>
+        <input asp-for="Rsvp.Email" />
+        <span asp-validation-for="Rsvp.Email"></span>
+
+        <label asp-for="Rsvp.Attendance"></label>
+        <select asp-for="Rsvp.Attendance">
+            <option value="">Select one</option>
+            <option>Joyfully accepts</option>
+            <option>Regretfully declines</option>
+        </select>
+        <span asp-validation-for="Rsvp.Attendance"></span>
+
+        <label asp-for="Rsvp.PlusOneName"></label>
+        <input asp-for="Rsvp.PlusOneName" />
+
+        <label asp-for="Rsvp.SongRequest"></label>
+        <input asp-for="Rsvp.SongRequest" />
+
+        <label asp-for="Rsvp.Note"></label>
+        <textarea asp-for="Rsvp.Note" rows="4"></textarea>
+
+        <button class="btn btn-romantic" type="submit">Send RSVP</button>
+    </form>
+</section>
+
+<section id="faq" class="section-band faq-band">
+    <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2>Helpful details</h2>
+    </div>
+    <div class="faq-list">
+        @foreach (var faq in Model.Wedding.Faqs)
+        {
+            <details>
+                <summary>@faq.Question</summary>
+                <p>@faq.Answer</p>
+            </details>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
